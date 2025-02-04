@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import loginUser from "api-calls/login";
 
 import "./Login.css";
@@ -9,11 +10,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
       console.log("Login successful!");
       setErrorMessage("");
+      setTimeout(() => {
+        navigate("/dogs");
+      }, 400);
     },
     onError: (error) => {
       setErrorMessage(
