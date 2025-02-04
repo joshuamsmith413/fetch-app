@@ -43,11 +43,6 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "semi": [
-      "error",
-      "always",
-      "fixAll"
-    ],
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [
       "error",

@@ -1,8 +1,8 @@
-import React from 'react';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import Login from './login/Login';
+import React from "react";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import Login from "./login/Login";
 
-import './App.css';
+import "./App.css";
 
 const queryClient = new QueryClient();
 
