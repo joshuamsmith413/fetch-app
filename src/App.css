@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(to right, rgb(92, 45, 107), rgb(9, 3, 37));
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    width: 90%;
+  }
+}
+
+.main {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 80%;
+  max-width: 1200px;
+  padding: 20px;
+}
