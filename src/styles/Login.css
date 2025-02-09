@@ -1,0 +1,40 @@
+.login-layout {
+  background-image: linear-gradient(to right, rgb(92, 45, 107), rgb(9, 3, 37));
+  display: grid;
+  place-items: center;
+  width: 80%;
+  height: 100vh;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.login {
+  background-color: white;
+  padding: 30px;
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 5;
+}
+
+.login h3 {
+  color: rgb(92, 45, 107);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 10px 0;
+}

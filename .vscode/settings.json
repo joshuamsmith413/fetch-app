@@ -1,14 +1,17 @@
 {
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.json"
+  },
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-  "editor.formatOnType": false, // required
-  "editor.formatOnPaste": true, // optional
-  "editor.formatOnSave": true, // optional
-  "editor.formatOnSaveMode": "file", // required to format on save
-  "files.autoSave": "onFocusChange", // optional but recommended
-  "vs-code-prettier-eslint.prettierLast": false, // set as "true" to run 'prettier' last not first
+  "editor.formatOnType": false, // Not needed, as you're formatting on save
+  "editor.formatOnPaste": true, // Optional
+  "editor.formatOnSave": true, // Ensure format on save
+  "editor.formatOnSaveMode": "file", // Format the file on save
+  "files.autoSave": "onWindowChange", // Optional, saves on window focus change
+  "vs-code-prettier-eslint.prettierLast": true, // Ensure prettier runs last after eslint
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "always" // Ensure eslint fixes are applied automatically
   },
   "eslint.validate": [
     "javascript",
@@ -21,6 +24,20 @@
   },
   "eslint.ignoreUntitled": true,
   "eslint.run": "onSave",
+  "eslint.codeActionsOnSave.rules": [], // Set to an empty array instead of null
   "eslint.workingDirectories": [],
-  "eslint.codeActionsOnSave.rules": null
+  "eslint.probe": [
+    "astro",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "mdx",
+    "vue",
+    "markdown",
+    "json",
+    "jsonc",
+    "react"
+  ]
 }

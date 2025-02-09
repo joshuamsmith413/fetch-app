@@ -1,9 +1,23 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": [
+        "components/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@api-calls/*": [
+        "api-calls/*"
+      ]
+    },
     "module": "esnext",
     "moduleResolution": "Node",
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
