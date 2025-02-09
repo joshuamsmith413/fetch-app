@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import loginUser from "api-calls/login";
 
-import "./Login.css";
+import loginUser from "api-calls/login";
+import Error from "components/Error";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -14,7 +14,7 @@ export default function Login() {
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
-      console.log("Login successful!");
+      localStorage.setItem("isLoggedIn", "true");
       setErrorMessage("");
       setTimeout(() => {
         navigate("/dogs");
@@ -60,7 +60,7 @@ export default function Login() {
           {mutation.isPending ? "Logging in..." : "Submit"}
         </button>
       </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <Error message={errorMessage} />}
       {mutation.isSuccess && !mutation.isError && (
         <p className="success-message">Logged in successfully!</p>
       )}

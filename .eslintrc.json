@@ -19,7 +19,8 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "project": "./tsconfig.json"
   },
   "env": {
     "browser": true,
@@ -27,8 +28,13 @@
     "es6": true
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     },
     "node": {
       "extensions": [
@@ -37,14 +43,36 @@
         ".ts",
         ".tsx"
       ]
-    },
-    "react": {
-      "version": "detect"
     }
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "comma-dangle": [
+      "error"
+    ],
     "react/jsx-filename-extension": [
       "error",
       {
@@ -52,6 +80,24 @@
           ".jsx",
           ".tsx"
         ]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
     "import/extensions": [
@@ -63,6 +109,7 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "@typescript-eslint/no-unused-vars": "warn"
   }
 }
