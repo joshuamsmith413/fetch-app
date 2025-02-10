@@ -124,3 +124,82 @@ input {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 1024px) {
+  .dogs {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .dog-search-form {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .dog-list {
+    padding-right: 0;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dogs {
+    padding: 10px;
+  }
+
+  .dog-breed-select {
+    width: 100%;
+  }
+
+  .dog-breed-dropdown {
+    align-items: flex-start;
+  }
+
+  .dog-section {
+    padding: 10px;
+  }
+
+  .dog-card-wrapper {
+    padding: 10px;
+  }
+
+  .input-group input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dogs {
+    padding: 5px;
+  }
+
+  .dog-search-form {
+    padding: 15px;
+  }
+
+  .dog-breed-select {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .input-group input {
+    width: 100%;
+  }
+
+  .dog-section {
+    padding: 5px;
+  }
+
+  .dog-card-wrapper {
+    padding: 8px;
+  }
+}

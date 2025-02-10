@@ -41,7 +41,7 @@ export default function FavoriteDogs() {
 
     setFavoriteDogIds(updatedFavorites);
   };
-  console.log(favoriteDogData);
+
   return (
     <div className="favorites-container">
       {(isLoading || favoriteLoading) && <Loader />}

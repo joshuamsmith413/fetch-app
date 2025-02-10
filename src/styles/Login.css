@@ -38,3 +38,33 @@
   font-size: 14px;
   margin: 10px 0;
 }
+
+@media (max-width: 768px) {
+  .login {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .login h3 {
+    font-size: 20px;
+  }
+
+  .success-message {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    padding: 15px;
+    width: 95%;
+  }
+
+  .login h3 {
+    font-size: 18px;
+  }
+
+  .success-message {
+    font-size: 10px;
+  }
+}
