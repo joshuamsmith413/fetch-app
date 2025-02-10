@@ -167,7 +167,6 @@ export default function Dogs() {
             dogData.dogs.map((dog) => (
               <div
                 key={dog.id}
-                className="dog-card-wrapper"
                 role="button"
                 tabIndex={0}
                 onClick={() => handleFavorite(dog.id)}
