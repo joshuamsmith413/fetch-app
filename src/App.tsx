@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes, NavLink, useNavigate } from "react-router";
 
 import { logoutUser } from "api-calls/login";
@@ -15,24 +15,18 @@ import "App.css";
 
 export default function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-  const mutation = useMutation({
+  const { mutate, error, isError } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
       localStorage.clear();
       navigate("/");
     },
-    onError: (error: Error) => {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Something went wrong",
-      );
-    },
   });
 
   const handleLogout = () => {
-    mutation.mutate();
+    mutate();
   };
 
   return (
@@ -65,7 +59,7 @@ export default function App() {
           </NavLink>
         )}
       </nav>
-      {errorMessage && <Error message={errorMessage} />}
+      {isError && <Error message={error.message} />}
       <Routes>
         <Route element={<LoginLayout />}>
           <Route path="/" element={<Login />} />

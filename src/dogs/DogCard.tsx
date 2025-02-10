@@ -27,7 +27,3 @@ export default function DogCard({ dog, isFav, isMatch }: Props) {
     </div>
   );
 }
-
-DogCard.defaultProps = {
-  isMatch: false,
-};

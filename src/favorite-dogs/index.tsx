@@ -12,7 +12,7 @@ export default function FavoriteDogs() {
     return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
 
-  const favoriteDogQuery = useQuery({
+  const { data: favoriteDogData, isLoading: favoriteLoading } = useQuery({
     queryKey: ["match-dogs"],
     queryFn: () => matchDogFromIds(favoriteDogIds),
   });
@@ -30,6 +30,10 @@ export default function FavoriteDogs() {
     return <Error message={error.message} />;
   }
 
+  if (favoriteDogIds.length === 0) {
+    return <Error message="Add dogs to your favorites to view them here." />;
+  }
+
   const handleFavorite = (dogId: string) => {
     const updatedFavorites = favoriteDogIds.includes(dogId)
       ? favoriteDogIds.filter((fav) => fav !== dogId)
@@ -37,11 +41,12 @@ export default function FavoriteDogs() {
 
     setFavoriteDogIds(updatedFavorites);
   };
-
+  console.log(favoriteDogData);
   return (
     <div className="favorites-container">
-      {isLoading && <Loader />}
+      {(isLoading || favoriteLoading) && <Loader />}
       {data &&
+        favoriteDogData &&
         data.map((dog) => (
           <div
             key={dog.id}
@@ -57,7 +62,7 @@ export default function FavoriteDogs() {
           >
             <DogCard
               dog={dog}
-              isMatch={favoriteDogQuery.data.match === dog.id}
+              isMatch={favoriteDogData.match === dog.id}
               isFav
             />
           </div>

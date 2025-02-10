@@ -5,17 +5,15 @@ import Select, { MultiValue } from "react-select";
 import { getDogBreeds, searchDogs } from "api-calls/dogs";
 import Error from "components/Error";
 import Loader from "components/Loader";
-
-import DogCard from "./DogCard";
-import DogPagination from "./DogPagination";
-
-const base = "https://frontend-take-home-service.fetch.com";
+import DogCard from "dogs/DogCard";
+import DogPagination from "dogs/DogPagination";
 
 export default function Dogs() {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [zipCodes, setZipCodes] = useState<string[]>([]);
   const [ageMin, setAgeMin] = useState<number>(0);
   const [ageMax, setAgeMax] = useState<number>(25);
+  const [sort, setSort] = useState("asc");
   const [favorites, setFavorites] = useState<string[]>(() => {
     const storedFavorites = localStorage.getItem("favorites");
     return storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -48,7 +46,7 @@ export default function Dogs() {
         ageMin?: number;
         ageMax?: number;
         size?: number;
-        sort?: string;
+        sort: string;
       };
       urlOverride?: string;
     }) => searchDogs(searchParams, urlOverride),
@@ -71,7 +69,9 @@ export default function Dogs() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate({ searchParams: { breeds, zipCodes, ageMin, ageMax } });
+    mutate({
+      searchParams: { breeds, zipCodes, ageMin, ageMax, sort },
+    });
   };
 
   const handleBreedChange = (
@@ -88,14 +88,14 @@ export default function Dogs() {
         ageMin,
         ageMax,
         size: 25,
-        sort: "breed:asc",
+        sort: "asc",
       },
-      urlOverride: base + url,
+      urlOverride: `${process.env.REACT_APP_API_URL}${url}`,
     });
   };
 
   useEffect(() => {
-    mutate({});
+    mutate({ searchParams: { sort: "asc" } });
   }, [mutate]);
 
   return (
@@ -135,7 +135,17 @@ export default function Dogs() {
             value={ageMax}
           />
         </div>
-
+        <div className="input-group">
+          <Select
+            options={[
+              { value: "asc", label: "ascending" },
+              { value: "desc", label: "descending" },
+            ]}
+            defaultValue={{ value: "asc", label: "ascending" }}
+            placeholder="Order by Breed"
+            onChange={(option) => setSort(option ? option.value : "asc")}
+          />
+        </div>
         <button className="submit-button" type="submit">
           {dogsLoading ? "Searching..." : "🔍 Search Dogs"}
         </button>

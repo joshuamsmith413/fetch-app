@@ -8,22 +8,15 @@ import Error from "components/Error";
 export default function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-  const mutation = useMutation({
+  const { mutate, isPending, isError, error, isSuccess } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
       localStorage.setItem("isLoggedIn", "true");
-      setErrorMessage("");
       setTimeout(() => {
         navigate("/dogs");
       }, 400);
-    },
-    onError: (error) => {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Something went wrong",
-      );
     },
   });
 
@@ -37,7 +30,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ name, email });
+    mutate({ name, email });
   };
 
   return (
@@ -57,13 +50,11 @@ export default function Login() {
           value={email}
         />
         <button className="submit-button" type="submit" onClick={handleSubmit}>
-          {mutation.isPending ? "Logging in..." : "Submit"}
+          {isPending ? "Logging in..." : "Submit"}
         </button>
       </form>
-      {errorMessage && <Error message={errorMessage} />}
-      {mutation.isSuccess && !mutation.isError && (
-        <p className="success-message">Logged in successfully!</p>
-      )}
+      {isError && <Error message={error.message} />}
+      {isSuccess && <p className="success-message">Logged in successfully!</p>}
     </div>
   );
 }

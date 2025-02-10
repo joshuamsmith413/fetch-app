@@ -64,7 +64,7 @@ export const searchDogs = async (
     ageMin?: number;
     ageMax?: number;
     size?: number;
-    sort?: string;
+    sort: string;
   },
   urlOverride?: string,
 ) => {
@@ -85,9 +85,9 @@ export const searchDogs = async (
       if (searchParams?.ageMax !== undefined) {
         params.append("ageMax", searchParams.ageMax.toString());
       }
-
+      console.log(searchParams);
       params.append("size", (searchParams?.size || 25).toString());
-      params.append("sort", searchParams?.sort || "breed:asc");
+      params.append("sort", `breed:${searchParams?.sort}`);
 
       return `${base}/dogs/search?${params}`;
     })();
