@@ -1,4 +1,4 @@
-# App created to match users with a dog in a shelter
+## App created to match users with a dog in a shelter
 
 ## Deploy
 
