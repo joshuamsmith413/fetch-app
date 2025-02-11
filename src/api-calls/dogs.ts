@@ -135,6 +135,15 @@ export const matchDogFromIds = async (dogIds: string[]) => {
   return response.json();
 };
 
+interface Location {
+  zip_code: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  state: string;
+  county: string;
+}
+
 export const searchLocationsByCity = async (
   city: string,
 ): Promise<string[]> => {
@@ -151,9 +160,9 @@ export const searchLocationsByCity = async (
     throw new Error(`Failed to search locations: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data: { results: Location[]; total: number } = await response.json();
   if (data.total > 0) {
-    return data.results.map((location: any) => location.zip_code); // ✅ Extract zip codes
+    return data.results.map((location) => location.zip_code); // ✅ Extract zip codes
   }
 
   throw new Error("No locations found, please search again");
