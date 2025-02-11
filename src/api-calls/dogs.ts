@@ -129,8 +129,32 @@ export const matchDogFromIds = async (dogIds: string[]) => {
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to save dogs: ${response.status}`);
+    throw new Error(`Failed to find a match: ${response.status}`);
   }
 
   return response.json();
+};
+
+export const searchLocationsByCity = async (
+  city: string,
+): Promise<string[]> => {
+  const response = await fetch(`${base}/locations/search`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ city, size: 25 }), // ✅ Only sending city and limiting results
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to search locations: ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (data.total > 0) {
+    return data.results.map((location: any) => location.zip_code); // ✅ Extract zip codes
+  }
+
+  throw new Error("No locations found, please search again");
 };

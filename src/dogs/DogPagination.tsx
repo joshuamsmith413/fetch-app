@@ -21,14 +21,12 @@ export default function DogPagination(props: DogPaginationProps) {
       >
         &laquo; Previous
       </button>
-
       <span className="total-results">Total Results: {totalResults}</span>
-
       <button
         type="button"
         className="pagination-btn"
         onClick={() => nextPageUrl && onPageChange(nextPageUrl)}
-        disabled={!nextPageUrl}
+        disabled={!nextPageUrl || totalResults < 25}
       >
         Next &raquo;
       </button>

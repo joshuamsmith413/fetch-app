@@ -23,7 +23,10 @@
 .dog-list {
   flex: 1;
   height: 100%;
+  align-items: center;
+  align-content: center;
   padding-right: 10px;
+  overflow-y: auto;
 }
 
 .dog-breed-dropdown {
@@ -103,12 +106,18 @@ input {
 
 .dog-section {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   padding: 20px;
   justify-items: center;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.dog-card-wrapper {
+  max-width: 300px;
+  width: 100%;
 }
 
 @media (max-width: 1024px) {

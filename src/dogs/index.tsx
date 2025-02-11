@@ -2,7 +2,11 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import Select, { MultiValue } from "react-select";
 
-import { getDogBreeds, searchDogs } from "api-calls/dogs";
+import {
+  getDogBreeds,
+  searchDogs,
+  searchLocationsByCity,
+} from "api-calls/dogs";
 import Error from "components/Error";
 import Loader from "components/Loader";
 import DogCard from "dogs/DogCard";
@@ -11,6 +15,7 @@ import DogPagination from "dogs/DogPagination";
 export default function Dogs() {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [zipCodes, setZipCodes] = useState<string[]>([]);
+  const [city, setCity] = useState<string>("");
   const [ageMin, setAgeMin] = useState<number>(0);
   const [ageMax, setAgeMax] = useState<number>(25);
   const [sort, setSort] = useState("asc");
@@ -30,7 +35,7 @@ export default function Dogs() {
   });
 
   const {
-    mutate,
+    mutate: fetchDogs,
     data: dogData,
     isPending: dogsLoading,
     error: dogError,
@@ -52,6 +57,16 @@ export default function Dogs() {
     }) => searchDogs(searchParams, urlOverride),
   });
 
+  const {
+    mutate: searchCity,
+    isPending: isCityLoading,
+    error: cityError,
+    isError: isCityError,
+  } = useMutation({
+    mutationFn: searchLocationsByCity,
+    onSuccess: (data) => setZipCodes(data), // Store results
+  });
+
   const handleFavorite = (dogId: string) => {
     setFavorites((prev) => {
       const updatedFavorites = prev.some((fav) => fav === dogId)
@@ -69,10 +84,23 @@ export default function Dogs() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate({
-      searchParams: { breeds, zipCodes, ageMin, ageMax, sort },
-    });
+    if (city.trim()) {
+      searchCity(city);
+    } else {
+      fetchDogs({
+        searchParams: { breeds, zipCodes, ageMin, ageMax, sort },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (zipCodes.length > 0) {
+      fetchDogs({
+        searchParams: { breeds, zipCodes, ageMin, ageMax, sort },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zipCodes]);
 
   const handleBreedChange = (
     selectedOptions: MultiValue<{ value: string; label: string }>,
@@ -81,7 +109,7 @@ export default function Dogs() {
   };
 
   const handlePageChange = (url: string) => {
-    mutate({
+    fetchDogs({
       searchParams: {
         breeds,
         zipCodes,
@@ -95,8 +123,8 @@ export default function Dogs() {
   };
 
   useEffect(() => {
-    mutate({ searchParams: { sort: "asc" } });
-  }, [mutate]);
+    fetchDogs({ searchParams: { sort: "asc" } });
+  }, [fetchDogs]);
 
   return (
     <div className="dogs">
@@ -116,8 +144,9 @@ export default function Dogs() {
         <div className="input-group">
           <input
             type="text"
-            placeholder="Enter zip codes (comma separated)"
-            onChange={(e) => setZipCodes(e.target.value.split(","))}
+            placeholder="Enter city name..."
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
           />
         </div>
 
@@ -153,7 +182,9 @@ export default function Dogs() {
       <div className="dog-list">
         {isDogError && <Error message={dogError.message} />}
         {isBreedError && <Error message={breedError.message} />}
+        {isCityError && <Error message={cityError.message} />}
         {dogsLoading && <Loader />}
+        {isCityLoading && <Loader />}
         {dogData && (
           <DogPagination
             totalResults={dogData.total}
@@ -166,6 +197,7 @@ export default function Dogs() {
           {dogData &&
             dogData.dogs.map((dog) => (
               <div
+                className="dog-card-wrapper"
                 key={dog.id}
                 role="button"
                 tabIndex={0}
@@ -180,7 +212,7 @@ export default function Dogs() {
               </div>
             ))}
         </div>
-        {dogData && (
+        {dogData && dogData.total > 25 && (
           <DogPagination
             totalResults={dogData.total}
             nextPageUrl={dogData.next}
