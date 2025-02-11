@@ -7,7 +7,7 @@ This app is deployed using Vercel's no code deployments. A live deployment can b
 
 In the project directory, you can run:
 
-## `npm install`
+### `npm install`
 
 Running this command downloads and sets up the necessary packages in the node_modules directory, ensuring the project has all required dependencies for development and production.
 
