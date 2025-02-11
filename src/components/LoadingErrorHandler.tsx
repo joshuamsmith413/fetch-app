@@ -11,7 +11,8 @@ export default function LoadingErrorHandler({
 }: {
   isLoading: boolean;
   isError: boolean;
-  error: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any; // typescript not accept unknown even if instanceof Error
   children: React.ReactNode;
 }) {
   if (isLoading) {

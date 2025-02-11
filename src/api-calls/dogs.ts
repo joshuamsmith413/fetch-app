@@ -110,8 +110,8 @@ export const searchDogs = async (
     return {
       dogs,
       total: data.total,
-      next: data.next, // Pagination next URL
-      prev: data.prev, // Pagination prev URL
+      next: data.next,
+      prev: data.prev,
     };
   }
 
@@ -155,7 +155,7 @@ export const searchLocationsByCity = async (
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ city, size: 25 }), // ✅ Only sending city and limiting results
+    body: JSON.stringify({ city, size: 25 }),
   });
 
   if (!response.ok) {
@@ -164,7 +164,7 @@ export const searchLocationsByCity = async (
 
   const data: { results: Location[]; total: number } = await response.json();
   if (data.total > 0) {
-    return data.results.map((location) => location.zip_code); // ✅ Extract zip codes
+    return data.results.map((location) => location.zip_code);
   }
 
   throw new Error("No locations found, please search again");
