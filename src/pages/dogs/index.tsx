@@ -7,10 +7,9 @@ import {
   searchDogs,
   searchLocationsByCity,
 } from "api-calls/dogs";
-import Error from "components/Error";
-import Loader from "components/Loader";
-import DogCard from "dogs/DogCard";
-import DogPagination from "dogs/DogPagination";
+import LoadingErrorHandler from "components/LoadingErrorHandler";
+import DogCard from "pages/dogs/DogCard";
+import DogPagination from "pages/dogs/DogPagination";
 
 export default function Dogs() {
   const [breeds, setBreeds] = useState<string[]>([]);
@@ -130,42 +129,53 @@ export default function Dogs() {
     <div className="dogs">
       <form className="dog-search-form" onSubmit={handleSearch}>
         {breedData && (
-          <Select
-            options={breedData.map((option) => ({
-              value: option,
-              label: option,
-            }))}
-            isMulti
-            isLoading={breedLoading}
-            onChange={handleBreedChange}
-            placeholder="Search breeds..."
-          />
+          <div className="input-group">
+            <label htmlFor="searchBreed">Search breed:</label>
+            <Select
+              id="searchBreed"
+              options={breedData.map((option) => ({
+                value: option,
+                label: option,
+              }))}
+              isMulti
+              isLoading={breedLoading}
+              onChange={handleBreedChange}
+              placeholder="Search breeds..."
+            />
+          </div>
         )}
         <div className="input-group">
+          <label htmlFor="searchCity">Search city</label>
           <input
+            id="searchCity"
             type="text"
             placeholder="Enter city name..."
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
         </div>
-
         <div className="input-group">
+          <label htmlFor="minAge">Minimum age:</label>
           <input
             type="number"
+            id="minAge"
             placeholder="Min Age"
             onChange={(e) => setAgeMin(Number(e.target.value))}
             value={ageMin}
           />
+          <label htmlFor="maxAge">Maximum age:</label>
           <input
             type="number"
+            id="maxAge"
             placeholder="Max Age"
             onChange={(e) => setAgeMax(Number(e.target.value))}
             value={ageMax}
           />
         </div>
         <div className="input-group">
+          <label htmlFor="breedSort">Order by breed</label>
           <Select
+            id="breedSort"
             options={[
               { value: "asc", label: "ascending" },
               { value: "desc", label: "descending" },
@@ -180,46 +190,40 @@ export default function Dogs() {
         </button>
       </form>
       <div className="dog-list">
-        {isDogError && <Error message={dogError.message} />}
-        {isBreedError && <Error message={breedError.message} />}
-        {isCityError && <Error message={cityError.message} />}
-        {dogsLoading && <Loader />}
-        {isCityLoading && <Loader />}
-        {dogData && (
-          <DogPagination
-            totalResults={dogData.total}
-            nextPageUrl={dogData.next}
-            prevPageUrl={dogData.prev}
-            onPageChange={handlePageChange}
-          />
-        )}
-        <div className="dog-section">
-          {dogData &&
-            dogData.dogs.map((dog) => (
-              <div
-                className="dog-card-wrapper"
-                key={dog.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleFavorite(dog.id)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    handleFavorite(dog.id);
-                  }
-                }}
-              >
-                <DogCard dog={dog} isFav={favorites.includes(dog.id)} />
-              </div>
-            ))}
-        </div>
-        {dogData && dogData.total > 25 && (
-          <DogPagination
-            totalResults={dogData.total}
-            nextPageUrl={dogData.next}
-            prevPageUrl={dogData.prev}
-            onPageChange={handlePageChange}
-          />
-        )}
+        <LoadingErrorHandler
+          isLoading={dogsLoading || isCityLoading}
+          isError={isDogError || isBreedError || isCityError}
+          error={dogError || breedError || cityError}
+        >
+          {dogData && (
+            <DogPagination
+              totalResults={dogData.total}
+              nextPageUrl={dogData.next}
+              prevPageUrl={dogData.prev}
+              onPageChange={handlePageChange}
+            />
+          )}
+          <div className="dog-section">
+            {dogData &&
+              dogData.dogs.map((dog) => (
+                <div className="dog-card-wrapper" key={dog.id}>
+                  <DogCard
+                    dog={dog}
+                    isFav={favorites.includes(dog.id)}
+                    handleFavorite={handleFavorite}
+                  />
+                </div>
+              ))}
+          </div>
+          {dogData && dogData.total > 25 && (
+            <DogPagination
+              totalResults={dogData.total}
+              nextPageUrl={dogData.next}
+              prevPageUrl={dogData.prev}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </LoadingErrorHandler>
       </div>
     </div>
   );

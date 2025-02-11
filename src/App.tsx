@@ -4,12 +4,12 @@ import { Route, Routes, NavLink, useNavigate } from "react-router";
 
 import { logoutUser } from "api-calls/login";
 import Error from "components/Error";
-import Dogs from "dogs";
-import DogLayout from "dogs/DogLayout";
-import FavoriteDogs from "favorite-dogs";
-import FavoriteLayout from "favorite-dogs/FavoriteLayout";
-import Login from "login/Login";
-import LoginLayout from "login/LoginLayout";
+import Dogs from "pages/dogs";
+import DogLayout from "pages/dogs/DogLayout";
+import FavoriteDogs from "pages/favorite-dogs";
+import FavoriteLayout from "pages/favorite-dogs/FavoriteLayout";
+import Login from "pages/login/Login";
+import LoginLayout from "pages/login/LoginLayout";
 
 import "App.css";
 

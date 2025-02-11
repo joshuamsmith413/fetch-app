@@ -1,6 +1,5 @@
 .dogs-layout {
   width: 90%;
-  margin: 0 auto;
 }
 
 .dogs {
@@ -15,18 +14,60 @@
 }
 
 .dog-search-form {
-  flex: 0 0 auto;
-  align-self: flex-start;
-  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  margin: 0 auto;
+  max-height: 550px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(92, 45, 107);
+  margin-bottom: 8px;
+}
+
+.input-group input,
+.dog-breed-select {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.input-group input:focus,
+.dog-breed-select:focus {
+  border-color: rgb(92, 45, 107);
+  outline: none;
+}
+
+.dog-breed-select {
+  background-color: white;
+  color: rgb(92, 45, 107);
+  border: 2px solid rgb(92, 45, 107);
 }
 
 .dog-list {
   flex: 1;
-  height: 100%;
   align-items: center;
   align-content: center;
   padding-right: 10px;
   overflow-y: auto;
+  max-height: 650px;
 }
 
 .dog-breed-dropdown {
@@ -37,90 +78,31 @@
   margin-bottom: 15px;
 }
 
-label {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgb(92, 45, 107);
-}
-
-.dog-breed-select {
-  width: 250px;
-  padding: 8px;
-  font-size: 16px;
-  border: 2px solid rgb(92, 45, 107);
-  border-radius: 8px;
-  background-color: white;
-  color: rgb(92, 45, 107);
-  outline: none;
-  cursor: pointer;
-}
-
-.dog-breed-select:focus {
-  border-color: rgb(9, 3, 37);
-}
-
-.dog-breed-select option {
-  padding: 10px;
-}
-
-input {
-  margin: 0 10px;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  width: calc(50% - 10px);
-}
-
-.dog-search-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.input-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease-in-out;
-}
-
-.input-group input:focus {
-  border-color: rgb(92, 45, 107);
-  outline: none;
-}
-
 .dog-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
-  justify-items: center;
+  justify-content: center; /* Centers items horizontally */
+  align-items: flex-start; /* Align items at the top */
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .dog-card-wrapper {
-  max-width: 300px;
-  width: 100%;
+  flex: 1 1 280px; /* Grow, shrink, and set min width */
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
+  .dogs-layout {
+    overflow-y: scroll;
+  }
+
   .dogs {
     flex-direction: column;
     height: auto;
@@ -137,6 +119,7 @@ input {
 
   .input-group {
     flex-direction: column;
+    gap: 10px;
   }
 
   input {

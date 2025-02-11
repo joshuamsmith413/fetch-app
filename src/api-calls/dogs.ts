@@ -118,7 +118,9 @@ export const searchDogs = async (
   throw new Error("No dogs found, please search again");
 };
 
-export const matchDogFromIds = async (dogIds: string[]) => {
+export const matchDogFromIds = async (
+  dogIds: string[],
+): Promise<{ match: string }> => {
   const response = await fetch(`${base}/dogs/match`, {
     method: "POST",
     headers: {

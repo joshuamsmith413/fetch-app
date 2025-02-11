@@ -13,12 +13,6 @@
   overflow: hidden;
   max-width: 100%;
   box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .favorites-container {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-  }
+  max-height: 650px;
+  overflow-y: scroll;
 }
